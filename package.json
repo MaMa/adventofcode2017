@@ -1,0 +1,9 @@
+{
+    "name": "adventofcode2017",
+    "version": "0.0.1",
+    "description": "Advent of code 2017 solutions",
+    "repository": "https://github.com/MaMa/adventofcode2017.git",
+    "author": "Markku Marjoneva <mama@iki.fi>",
+    "license": "Unlicense",
+    "dependencies": {}
+}
