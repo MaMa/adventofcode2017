@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const {pairs} = require('./utils')
 
 const checksum = input => {
   const rows = input.split('\n')
@@ -12,12 +13,12 @@ const checksum = input => {
   return checksum
 }
 
-const test_input =
+const test1 =
 `5 1 9 5
 7 5 3
 2 4 6 8`
 
-console.log('test', checksum(test_input))
+console.log('test1', checksum(test1))
 
 const input =
 `5806	6444	1281	38	267	1835	223	4912	5995	230	4395	2986	6048	4719	216	1201
@@ -39,3 +40,24 @@ const input =
 
 console.log('part1', checksum(input))
 
+const checksum2 = input => {
+  const rows = input.split('\n')
+  return _.reduce(rows, (sum, row) => {
+    const numbers = row.split(/\s+/).map(Number)
+    const div = pairs(numbers)
+      .map(_.sortBy)
+      .filter(pair => pair[1] % pair[0] == 0)
+      .map(pair => pair[1] / pair[0])
+      .pop()
+    return sum + div
+  }, 0)
+}
+
+const test2 =
+`5 9 2 8
+9 4 7 3
+3 8 6 5`
+
+console.log('test2', checksum2(test2))
+
+console.log('part2', checksum2(input))
