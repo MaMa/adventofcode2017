@@ -5,5 +5,7 @@
     "repository": "https://github.com/MaMa/adventofcode2017.git",
     "author": "Markku Marjoneva <mama@iki.fi>",
     "license": "Unlicense",
-    "dependencies": {}
+    "dependencies": {
+        "lodash": "^4.17.4"
+    }
 }
