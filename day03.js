@@ -61,14 +61,85 @@ function stepsFor(number) {
   return Math.abs(x) + Math.abs(y)
 }
 
-function test(n) {
-  console.log(n, stepsFor(n))
+console.log('Part 1', stepsFor(265149))
+
+/*
+--- Part Two ---
+
+As a stress test on the system, the programs here clear the grid and then store the value 1 in square 1. Then, in the same allocation order as shown above, they store the sum of the values in all adjacent squares, including diagonals.
+
+So, the first few squares' values are chosen as follows:
+
+Square 1 starts with the value 1.
+Square 2 has only one adjacent filled square (with value 1), so it also stores 1.
+Square 3 has both of the above squares as neighbors and stores the sum of their values, 2.
+Square 4 has all three of the aforementioned squares as neighbors and stores the sum of their values, 4.
+Square 5 only has the first and fourth squares as neighbors, so it gets the value 5.
+Once a square is written, its value does not change. Therefore, the first few squares would receive the following values:
+
+147  142  133  122   59
+304    5    4    2   57
+330   10    1    1   54
+351   11   23   25   26
+362  747  806--->   ...
+What is the first value written that is larger than your puzzle input?
+
+Your puzzle input is still 265149.
+*/
+
+function part2(number) {
+
+  const key = (x,y) => `${x},${y}`
+
+  const store = new Map([[key(0,0), 1]])
+  let x = 0, y = 0, max = 0
+  let dir = 'r'
+
+  function getStore(x, y) {
+    const val = store.get(key(x,y))
+    return val ? val : 0
+  }
+
+  function neighborSum(x, y) {
+    return getStore(x-1, y+1)
+      + getStore(x, y+1)
+      + getStore(x+1, y+1)
+      + getStore(x-1, y)
+      + getStore(x+1, y)
+      + getStore(x-1, y-1)
+      + getStore(x, y-1)
+      + getStore(x+1, y-1)
+  }
+
+  let sum = neighborSum(x, y)
+  while (sum <= number) {
+    switch (dir) {
+      case 'r':
+        x += 1
+        if (x > max) {
+          max = x
+          dir = 'u'
+        }
+        break
+      case 'u':
+        y += 1
+        if (y >= max) dir = 'l'
+        break
+      case 'l':
+        x -= 1
+        if (x <= -max) dir = 'd'
+        break
+      case 'd':
+        y -= 1
+        if (y <= -max) dir = 'r'
+        break
+      default:
+        throw new Error(`Invalid dir ${dir}`)
+    }
+    sum = neighborSum(x, y)
+    store.set(key(x,y), sum)
+  }
+  return sum
 }
 
-test(1)
-test(12)
-test(23)
-test(1024)
-
-console.log('Part 1')
-test(265149)
+console.log('part2', part2(265149))
