@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 /**
  * All possible pair combinations from array
  * @param {*} array
@@ -8,6 +10,18 @@ function pairs(array) {
     [])
 }
 
+/**
+ * Read file and return trimmed rows as array
+ */
+function readLines(filename) {
+  return fs.readFileSync(filename, {encoding: 'UTF8'})
+    .split('\n')
+    .map(row => row.trim())
+    .filter(row => !!row.length)
+}
+
+
 module.exports = {
-  pairs
+  pairs,
+  readLines
 }
