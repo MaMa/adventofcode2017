@@ -32,7 +32,7 @@ Given the initial block counts in your puzzle input, how many redistribution cyc
 const input = `4	1	15	12	0	9	9	5	5	8	7	3	14	5	12	3`.split(/\s+/).map(Number)
 
 function reallocator(banks) {
-  const states = new Set()
+  const states = {}
   const len = banks.length
   let cycles = 0
 
@@ -40,7 +40,7 @@ function reallocator(banks) {
   const state = () => banks.join(',')
 
   do {
-    states.add(state(banks))
+    states[state(banks)] = cycles
     let idx = mostBlockIndex()
     let blocks = banks[idx]
     banks[idx] = 0;
@@ -50,10 +50,10 @@ function reallocator(banks) {
       blocks -= 1
     }
     cycles += 1
-  } while (!states.has(state(banks)))
+  } while (typeof states[state(banks)] === 'undefined')
 
-  return cycles
+  return {cycles, loop: cycles - states[state(banks)]}
 }
 
 console.log('Test', reallocator([0, 2, 7, 0]))
-console.log('Part1', reallocator(input.slice()))
+console.log('Part1 & 2', reallocator(input.slice()))
