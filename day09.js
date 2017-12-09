@@ -60,12 +60,15 @@ function cancelFilter() {
   }
 }
 
+let garbageCount = 0
 function garbageFilter() {
   let garbage
   return (input) => {
     if (garbage) {
       if (input == '>') {
         garbage = false
+      } else {
+        garbageCount += 1
       }
       return false
     }
@@ -98,8 +101,21 @@ function part1(input) {
 
 console.log('Part1', part1(input))
 
+/*
+--- Part Two ---
 
+Now, you're ready to remove the garbage.
 
+To prove you've removed it, you need to count all of the characters within the garbage. The leading and trailing < and > don't count, nor do any canceled characters or the ! doing the canceling.
 
+<>, 0 characters.
+<random characters>, 17 characters.
+<<<<>, 3 characters.
+<{!>}>, 2 characters.
+<!!>, 0 characters.
+<!!!>>, 0 characters.
+<{o"i!a,<{i<a>, 10 characters.
+How many non-canceled characters are within the garbage in your puzzle input?
+*/
 
-
+console.log('Part2', garbageCount)
