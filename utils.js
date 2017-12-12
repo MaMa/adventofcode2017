@@ -20,8 +20,15 @@ function readLines(filename) {
     .filter(row => !!row.length)
 }
 
+/**
+ * Read file and return single row
+ */
+function readLine(filename) {
+  return readLines(filename)[0]
+}
 
 module.exports = {
   pairs,
+  readLine,
   readLines
 }
