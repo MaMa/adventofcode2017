@@ -75,3 +75,26 @@ assert.equal(part1('n,n,nw,nw,sw,sw,s,s,se,se,ne,ne'), 0)
 assert.equal(part1('nw,nw,n,n,n'), 5)
 
 console.log('Part1', part1(input))
+
+/*
+--- Part Two ---
+
+How many steps away is the furthest he ever got from his starting position?
+*/
+
+function part2(path) {
+  const steps = path.split(',')
+  let maxDist = 0
+  function trackStep(coords, dir) {
+    const next = step(coords, dir)
+    const d = dist(next)
+    if (d > maxDist) {
+      maxDist = d
+    }
+    return next
+  }
+  steps.reduce(trackStep, [0, 0])
+  return maxDist
+}
+
+console.log('Part2', part2(input))
