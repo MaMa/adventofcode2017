@@ -6,6 +6,6 @@
     "author": "Markku Marjoneva <mama@iki.fi>",
     "license": "Unlicense",
     "dependencies": {
-        "lodash": "^4.17.4"
+        "lodash": "^4.17.13"
     }
 }
